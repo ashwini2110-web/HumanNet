@@ -1,0 +1,291 @@
+const fs = require('fs');
+const path = require('path');
+
+// Simple persistent JSON DB storage for robust instant execution without MongoDB local dependency,
+// with clean MongoDB schema & mongoose interface ready.
+const DB_FILE = path.join(__dirname, 'db.json');
+
+const defaultData = {
+  users: [
+    {
+      id: 'usr_ashwini',
+      name: 'Ashwini Sharma',
+      email: 'ashwini@humannet.ai',
+      password: 'password123',
+      photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+      bio: 'Staff AI Engineer & Distributed Systems Architect. Passionate about LLMs, Vector Search, and mentoring founders.',
+      skillsOffered: [
+        { id: 's1', name: 'Machine Learning & LLMs', category: 'Technology', level: 'Expert', description: 'Transformer architectures, PyTorch, LoRA fine-tuning, RAG pipelines' },
+        { id: 's2', name: 'System Design at Scale', category: 'Technology', level: 'Expert', description: 'Microservices, Kafka, Redis caching, high concurrency patterns' },
+        { id: 's3', name: 'Startup Pitching', category: 'Business', level: 'Intermediate', description: 'Structuring seed pitch decks and technical due diligence' }
+      ],
+      skillsWanted: ['Quantum Computing', 'Digital Product UI', 'Neuroscience Basics'],
+      interests: ['Generative AI', 'Deep Tech', 'Angel Investing', 'Philosophy'],
+      experienceLevel: 'Staff / 10+ Years',
+      availability: 'Weekends & Evenings (EST)',
+      location: 'San Francisco, CA (Remote/Hybrid)',
+      rating: 4.98,
+      reviewsCount: 42,
+      credits: 1250,
+      createdAt: '2026-01-15T10:00:00.000Z'
+    },
+    {
+      id: 'usr_rahul',
+      name: 'Rahul Mehta',
+      email: 'rahul@humannet.ai',
+      password: 'password123',
+      photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+      bio: 'Full Stack Tech Lead & React / Node Performance Specialist. 8+ yrs scaling web apps to millions of MAUs.',
+      skillsOffered: [
+        { id: 's4', name: 'Full Stack Web Architecture', category: 'Technology', level: 'Expert', description: 'Next.js 15, Node.js, GraphQL, PostgreSQL performance indexing' },
+        { id: 's5', name: 'Product Engineering', category: 'Business', level: 'Advanced', description: 'Scrum sprint pacing, engineering culture, CI/CD pipelines' },
+        { id: 's6', name: 'TypeScript & React Internals', category: 'Technology', level: 'Expert', description: 'Fiber architecture, custom hooks, memory optimizations' }
+      ],
+      skillsWanted: ['Machine Learning & LLMs', 'Public Speaking', 'Seed Fundraising'],
+      interests: ['Open Source', 'SaaS Growth', 'Cycling', 'Chess'],
+      experienceLevel: 'Senior / 8 Years',
+      availability: 'Flexible (IST / GMT)',
+      location: 'Bangalore, India (Remote)',
+      rating: 4.92,
+      reviewsCount: 38,
+      credits: 840,
+      createdAt: '2026-02-01T12:00:00.000Z'
+    },
+    {
+      id: 'usr_priya',
+      name: 'Priya Sundaram',
+      email: 'priya@humannet.ai',
+      password: 'password123',
+      photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
+      bio: 'Product Design Lead & Design Systems Pioneer. Ex-Fintech, mentor at multiple YC cohort startups.',
+      skillsOffered: [
+        { id: 's7', name: 'Design Systems & Figma Mastery', category: 'Design', level: 'Expert', description: 'Component architecture, tokens, atomic design, accessibility WCAG' },
+        { id: 's8', name: 'UX Research & Product Strategy', category: 'Design', level: 'Expert', description: 'User interviews, usability heuristics, retention-focused flows' },
+        { id: 's9', name: 'Design Leadership', category: 'Personal Development', level: 'Advanced', description: 'Career ladders, portfolio critiques, cross-functional stakeholder alignment' }
+      ],
+      skillsWanted: ['Frontend Coding (Tailwind/React)', 'AI Prototyping'],
+      interests: ['Typography', 'Generative Art', 'Human-Computer Interaction'],
+      experienceLevel: 'Lead / 9 Years',
+      availability: 'Weekday Mornings (PST)',
+      location: 'Seattle, WA (Remote)',
+      rating: 4.95,
+      reviewsCount: 51,
+      credits: 1420,
+      createdAt: '2026-01-20T09:30:00.000Z'
+    },
+    {
+      id: 'usr_elena',
+      name: 'Elena Rostova',
+      email: 'elena@humannet.ai',
+      password: 'password123',
+      photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
+      bio: 'Venture Capital Associate & Growth Hacker. Helping builders scale B2B SaaS from 0 to $1M ARR.',
+      skillsOffered: [
+        { id: 's10', name: 'B2B Go-To-Market & Growth', category: 'Business', level: 'Expert', description: 'Outbound sales funnels, product-led growth, cold outreach engines' },
+        { id: 's11', name: 'Pitch Deck & Financial Modeling', category: 'Business', level: 'Advanced', description: 'Unit economics, LTV/CAC, cap tables, investor updates' }
+      ],
+      skillsWanted: ['Data Science', 'SQL Mastery'],
+      interests: ['Venture Capital', 'Fintech', 'Rock Climbing'],
+      experienceLevel: 'Principal / 7 Years',
+      availability: 'Evenings (EST)',
+      location: 'New York, NY (Hybrid)',
+      rating: 4.88,
+      reviewsCount: 29,
+      credits: 910,
+      createdAt: '2026-02-14T14:15:00.000Z'
+    },
+    {
+      id: 'usr_marcus',
+      name: 'Marcus Vance',
+      email: 'marcus@humannet.ai',
+      password: 'password123',
+      photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
+      bio: 'Executive Vocal & Public Speaking Coach. Former TED speaker trainer, corporate storytelling coach.',
+      skillsOffered: [
+        { id: 's12', name: 'Executive Presence & Storytelling', category: 'Communication', level: 'Expert', description: 'Overcoming stage anxiety, pitch delivery, cadence, body language' },
+        { id: 's13', name: 'Cross-cultural Communication', category: 'Communication', level: 'Advanced', description: 'High-stakes negotiations, leadership roundtables' }
+      ],
+      skillsWanted: ['Podcasting Setup', 'Digital Marketing'],
+      interests: ['Public Speaking', 'Improv', 'Philosophy', 'Jazz'],
+      experienceLevel: 'Executive / 12 Years',
+      availability: 'Weekdays & Weekends',
+      location: 'London, UK (Remote/In-person)',
+      rating: 4.99,
+      reviewsCount: 64,
+      credits: 1680,
+      createdAt: '2026-01-10T16:00:00.000Z'
+    }
+  ],
+  requests: [
+    {
+      id: 'req_1',
+      userId: 'usr_rahul',
+      userName: 'Rahul Mehta',
+      userPhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+      skillRequired: 'Machine Learning & LLMs',
+      category: 'Technology',
+      levelRequired: 'Intermediate',
+      mode: 'Online',
+      schedulePreference: 'Weekends / 2 hours weekly',
+      description: 'Looking to transition from traditional full-stack to deploying local LLM models with Ollama, fine-tuning Llama-3, and building low-latency RAG architectures.',
+      status: 'active',
+      createdAt: '2026-10-01T10:00:00.000Z'
+    },
+    {
+      id: 'req_2',
+      userId: 'usr_priya',
+      userName: 'Priya Sundaram',
+      userPhoto: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
+      skillRequired: 'Frontend Coding (Tailwind/React)',
+      category: 'Technology',
+      levelRequired: 'Beginner',
+      mode: 'Online',
+      schedulePreference: 'Flexible Weekday Evenings',
+      description: 'I want to build real interactive prototypes instead of static mockups. Need guidance in structuring React state and component props cleanly.',
+      status: 'active',
+      createdAt: '2026-10-03T14:30:00.000Z'
+    },
+    {
+      id: 'req_3',
+      userId: 'usr_elena',
+      userName: 'Elena Rostova',
+      userPhoto: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
+      skillRequired: 'Executive Presence & Storytelling',
+      category: 'Communication',
+      levelRequired: 'Advanced',
+      mode: 'Online',
+      schedulePreference: 'Tuesdays & Thursdays',
+      description: 'Preparing for global investor keynote and tech podcast interviews. Need focused feedback on voice inflection and clarity.',
+      status: 'in_progress',
+      createdAt: '2026-10-04T09:15:00.000Z'
+    }
+  ],
+  connections: [
+    {
+      id: 'conn_1',
+      mentorId: 'usr_ashwini',
+      mentorName: 'Ashwini Sharma',
+      mentorPhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+      learnerId: 'usr_rahul',
+      learnerName: 'Rahul Mehta',
+      learnerPhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+      skill: 'Machine Learning & LLMs',
+      status: 'active', // active, pending, completed
+      sessionsCompleted: 4,
+      totalCreditsExchanged: 320,
+      startedAt: '2026-09-15T00:00:00.000Z',
+      lastInteraction: '2026-10-05T18:00:00.000Z',
+      nodeNextId: 'conn_2' // Linked list demonstration representation
+    },
+    {
+      id: 'conn_2',
+      mentorId: 'usr_marcus',
+      mentorName: 'Marcus Vance',
+      mentorPhoto: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
+      learnerId: 'usr_elena',
+      learnerName: 'Elena Rostova',
+      learnerPhoto: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
+      skill: 'Executive Presence & Storytelling',
+      status: 'active',
+      sessionsCompleted: 2,
+      totalCreditsExchanged: 160,
+      startedAt: '2026-09-28T00:00:00.000Z',
+      lastInteraction: '2026-10-04T12:00:00.000Z',
+      nodeNextId: null
+    }
+  ],
+  undoStack: [], // Stack data structure for undo operations
+  categoriesTree: {
+    id: 'root',
+    name: 'All Knowledge Domains',
+    children: [
+      {
+        id: 'cat_tech',
+        name: 'Technology',
+        badge: 'High Demand',
+        children: [
+          {
+            id: 'cat_ai',
+            name: 'Artificial Intelligence',
+            children: [
+              { id: 'cat_llm', name: 'LLMs & Prompt Engineering', count: 184 },
+              { id: 'cat_cv', name: 'Computer Vision & Diffusion', count: 92 },
+              { id: 'cat_rag', name: 'RAG & Vector Embeddings', count: 145 }
+            ]
+          },
+          {
+            id: 'cat_web',
+            name: 'Web & Distributed Systems',
+            children: [
+              { id: 'cat_react', name: 'React & Modern Frontend', count: 220 },
+              { id: 'cat_cloud', name: 'Cloud Architecture & DevOps', count: 160 }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'cat_biz',
+        name: 'Business & Leadership',
+        badge: 'High Value',
+        children: [
+          {
+            id: 'cat_growth',
+            name: 'Growth & GTM Strategy',
+            children: [
+              { id: 'cat_b2b', name: 'B2B Sales & Outbound', count: 75 },
+              { id: 'cat_plg', name: 'Product-Led Growth', count: 88 }
+            ]
+          },
+          {
+            id: 'cat_funding',
+            name: 'Fundraising & Finance',
+            children: [
+              { id: 'cat_pitch', name: 'Pitch Decks & Term Sheets', count: 64 },
+              { id: 'cat_models', name: 'Financial Modeling', count: 42 }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'cat_design',
+        name: 'Design & Creative',
+        children: [
+          { id: 'cat_uiux', name: 'UI/UX & Design Systems', count: 130 },
+          { id: 'cat_brand', name: 'Brand Strategy & Identity', count: 78 }
+        ]
+      },
+      {
+        id: 'cat_comm',
+        name: 'Communication & Soft Skills',
+        children: [
+          { id: 'cat_speaker', name: 'Executive Public Speaking', count: 96 },
+          { id: 'cat_nego', name: 'Negotiation & Pitching', count: 84 }
+        ]
+      }
+    ]
+  }
+};
+
+function readDb() {
+  if (!fs.existsSync(DB_FILE)) {
+    fs.writeFileSync(DB_FILE, JSON.stringify(defaultData, null, 2), 'utf-8');
+    return defaultData;
+  }
+  try {
+    const raw = fs.readFileSync(DB_FILE, 'utf-8');
+    return JSON.parse(raw);
+  } catch (err) {
+    console.error('Error reading DB, reinitializing:', err);
+    fs.writeFileSync(DB_FILE, JSON.stringify(defaultData, null, 2), 'utf-8');
+    return defaultData;
+  }
+}
+
+function writeDb(data) {
+  fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
+}
+
+module.exports = {
+  readDb,
+  writeDb
+};
