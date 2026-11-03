@@ -4,19 +4,18 @@ import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import LandingView from './components/LandingView';
 import DashboardView from './components/DashboardView';
+import ConceptFirstView from './components/ConceptFirstView';
 import AiMatcher from './components/AiMatcher';
 import SkillMarketplace from './components/SkillMarketplace';
 import LearningRequestsView from './components/LearningRequestsView';
 import ConnectionsView from './components/ConnectionsView';
 import AiInsightsView from './components/AiInsightsView';
-import DataStructuresView from './components/DataStructuresView';
-import DsaShowcaseView from './components/DsaShowcaseView';
 import ProfileView from './components/ProfileView';
 import AuthModal from './components/AuthModal';
 
 function AppContent() {
-  // Navigation tabs: 'landing' | 'dashboard' | 'dsa_showcase' | 'matcher' | 'marketplace' | 'requests' | 'connections' | 'dsa' | 'insights' | 'profile'
-  const [currentTab, setCurrentTab] = useState('dsa_showcase');
+  // Navigation tabs: 'landing' | 'network' | 'dashboard' | 'matcher' | 'marketplace' | 'requests' | 'connections' | 'insights' | 'profile'
+  const [currentTab, setCurrentTab] = useState('network');
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const [selectedMatcherSkill, setSelectedMatcherSkill] = useState(null);
@@ -87,7 +86,7 @@ function AppContent() {
             />
 
             <main className="flex-1 overflow-y-auto">
-              {currentTab === 'dsa_showcase' && <DsaShowcaseView />}
+              {currentTab === 'network' && <ConceptFirstView />}
               {currentTab === 'dashboard' && <DashboardView onNavigate={setCurrentTab} />}
               {currentTab === 'matcher' && (
                 <AiMatcher 
@@ -108,7 +107,6 @@ function AppContent() {
                 />
               )}
               {currentTab === 'connections' && <ConnectionsView />}
-              {currentTab === 'dsa' && <DataStructuresView />}
               {currentTab === 'insights' && <AiInsightsView onExploreSkill={() => setCurrentTab('matcher')} />}
               {currentTab === 'profile' && <ProfileView />}
             </main>

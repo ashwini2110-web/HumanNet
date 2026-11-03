@@ -21,15 +21,14 @@ export default function Sidebar({ currentTab, setCurrentTab }) {
   const { user, logout } = useAuth();
 
   const navigationItems = [
-    { id: 'dsa_showcase', label: 'DSA Showcase', icon: Layers, badge: 'Viva Ready', highlight: true },
+    { id: 'network', label: 'Network Graph', icon: Layers, badge: '3D Live', highlight: true },
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, badge: null },
     { id: 'matcher', label: 'Mentor Matching', icon: Sparkles, badge: 'Priority Queue' },
-    { id: 'marketplace', label: 'Skill Catalog', icon: Compass, badge: 'Array' },
+    { id: 'marketplace', label: 'Skill Catalog', icon: Compass, badge: 'Tree' },
     { id: 'requests', label: 'Learning Requests', icon: SendHorizontal, badge: 'Queue' },
-    { id: 'connections', label: 'Human Connections', icon: Users2, badge: 'Linked List' },
-    { id: 'dsa', label: 'System Architecture', icon: Cpu, badge: 'Stack/Tree' },
-    { id: 'insights', label: 'Skill Insights', icon: BrainCircuit, badge: null },
-    { id: 'profile', label: 'My Skill Profile', icon: UserCircle, badge: null },
+    { id: 'connections', label: 'Connections', icon: Users2, badge: 'Linked List' },
+    { id: 'insights', label: 'Capability Insights', icon: BrainCircuit, badge: null },
+    { id: 'profile', label: 'Skill Profile', icon: UserCircle, badge: 'Hash Map' },
   ];
 
   return (

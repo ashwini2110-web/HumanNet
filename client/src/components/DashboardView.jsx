@@ -37,22 +37,22 @@ export default function DashboardView({ onNavigate }) {
         <div className="relative z-10 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-sky-500/10 text-sky-400 border border-sky-500/20 text-xs font-mono font-medium mb-3">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>HumanNet: A Skill Sharing Platform Based on Data Structures</span>
+            <span>HumanNet Intelligence</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
             Welcome back, {user?.name?.split(' ')[0] || 'Member'}
           </h1>
           <p className="text-sm text-[#94A3B8] mt-2 leading-relaxed">
-            All data structures (Linked List, Stack, Queue, Priority Queue, Hash Map, Tree, Graph, BFS, DFS) are active and synchronized with the runtime database.
+            Discover mentors, request skills, and explore real-time interactive connections across the network.
           </p>
 
           <div className="flex flex-wrap items-center gap-3 mt-6">
             <button
-              onClick={() => onNavigate('dsa_showcase')}
+              onClick={() => onNavigate('network')}
               className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#38BDF8] to-[#0284C7] text-slate-950 font-bold text-xs shadow-lg shadow-sky-500/20 flex items-center gap-2 hover:scale-105 transition-all"
             >
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Open DSA Showcase (Viva Ready)</span>
+              <span>Explore 3D Network Graph</span>
             </button>
             <button
               onClick={() => onNavigate('matcher')}

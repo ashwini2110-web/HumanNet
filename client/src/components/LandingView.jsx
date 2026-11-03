@@ -40,17 +40,17 @@ export default function LandingView({ onGetStarted, onExploreSkills }) {
         {/* Startup Badge */}
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/80 border border-slate-700/80 text-xs text-sky-300 mb-8 backdrop-blur shadow-inner">
           <span className="flex h-2 w-2 rounded-full bg-sky-400 animate-pulse"></span>
-          <span>SPPU NEP 2020 Examination & Practical Viva Edition</span>
+          <span>Next-Gen Capability Marketplace</span>
           <span className="text-slate-500">|</span>
-          <span className="text-purple-300 font-mono">Data Structures Core</span>
+          <span className="text-purple-300 font-mono">3D Graph Intelligence</span>
         </div>
 
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-[1.1] mb-6">
-          Human<span className="text-[#38BDF8]">Net</span>: <span className="bg-gradient-to-r from-[#38BDF8] via-indigo-400 to-[#A855F7] bg-clip-text text-transparent">A Skill Sharing Platform Based on Data Structures</span>
+          Unlock Human <span className="bg-gradient-to-r from-[#38BDF8] via-indigo-400 to-[#A855F7] bg-clip-text text-transparent">Potential</span>
         </h1>
 
         <p className="text-lg md:text-xl text-[#94A3B8] max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
-          Connect, learn, teach, and grow through live demonstrations of Linked Lists, Stacks, Queues, Priority Queues, Hash Maps, Trees, Graphs, BFS, and DFS.
+          Connect directly with vetted practitioners, explore skill networks in 3D, and grow through intelligent human matching.
         </p>
 
         {/* Action Buttons */}
