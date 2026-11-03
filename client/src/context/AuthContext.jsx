@@ -5,9 +5,20 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem('humannet_user');
-    return saved ? JSON.parse(saved) : {
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed.name === 'Ashwini Sharma') {
+          parsed.name = 'Ashwini Muthamshetty';
+        }
+        return parsed;
+      } catch (e) {
+        // ignore JSON parse error
+      }
+    }
+    return {
       id: 'usr_ashwini',
-      name: 'Ashwini Sharma',
+      name: 'Ashwini Muthamshetty',
       email: 'ashwini@humannet.ai',
       photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
       bio: 'Staff AI Engineer & Distributed Systems Architect. Passionate about LLMs, Vector Search, and mentoring founders.',

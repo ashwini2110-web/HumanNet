@@ -1,0 +1,11 @@
+{
+  "name": "humannet",
+  "version": "1.0.0",
+  "private": true,
+  "description": "HumanNet - AI-Powered Human Capability Network",
+  "scripts": {
+    "build": "cd client && npm run build",
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && node index.js"
+  }
+}

@@ -178,7 +178,7 @@ export default function LandingView({ onGetStarted, onExploreSkills }) {
                       className="w-10 h-10 rounded-lg object-cover ring-1 ring-sky-400"
                     />
                     <div>
-                      <p className="text-xs font-bold text-white">Ashwini Sharma</p>
+                      <p className="text-xs font-bold text-white">Ashwini Muthamshetty</p>
                       <p className="text-[11px] text-slate-400">Staff AI Engineer · San Francisco</p>
                     </div>
                   </div>

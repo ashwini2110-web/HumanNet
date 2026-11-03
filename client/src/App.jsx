@@ -18,16 +18,25 @@ function AppContent() {
   const [currentTab, setCurrentTab] = useState('dashboard');
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
+  const [selectedMatcherSkill, setSelectedMatcherSkill] = useState(null);
+
   // Cross-component handlers
   const handleSelectSkillFromMarketplace = (skillName) => {
+    setSelectedMatcherSkill(skillName);
     setCurrentTab('matcher');
   };
 
   const handleConnectFromMarketplace = (mentor) => {
+    if (mentor?.skillsOffered?.[0]?.name) {
+      setSelectedMatcherSkill(mentor.skillsOffered[0].name);
+    }
     setCurrentTab('matcher');
   };
 
   const handleFindMatchesForRequest = (req) => {
+    if (req?.skillRequired) {
+      setSelectedMatcherSkill(req.skillRequired);
+    }
     setCurrentTab('matcher');
   };
 
@@ -78,7 +87,12 @@ function AppContent() {
 
             <main className="flex-1 overflow-y-auto">
               {currentTab === 'dashboard' && <DashboardView onNavigate={setCurrentTab} />}
-              {currentTab === 'matcher' && <AiMatcher onRequestConnect={() => setCurrentTab('connections')} />}
+              {currentTab === 'matcher' && (
+                <AiMatcher 
+                  initialSkill={selectedMatcherSkill} 
+                  onRequestConnect={() => setCurrentTab('connections')} 
+                />
+              )}
               {currentTab === 'marketplace' && (
                 <SkillMarketplace 
                   onSelectSkill={handleSelectSkillFromMarketplace}

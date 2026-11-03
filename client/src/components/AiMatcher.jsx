@@ -17,9 +17,9 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-export default function AiMatcher({ onRequestConnect }) {
+export default function AiMatcher({ onRequestConnect, initialSkill = null }) {
   const { user, token } = useAuth();
-  const [skillQuery, setSkillQuery] = useState('Machine Learning & LLMs');
+  const [skillQuery, setSkillQuery] = useState(initialSkill || 'Machine Learning & LLMs');
   const [category, setCategory] = useState('Technology');
   const [level, setLevel] = useState('Intermediate');
   const [mode, setMode] = useState('Online');
@@ -29,6 +29,13 @@ export default function AiMatcher({ onRequestConnect }) {
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [matches, setMatches] = useState([]);
   const [connectedMentors, setConnectedMentors] = useState({});
+
+  useEffect(() => {
+    if (initialSkill) {
+      setSkillQuery(initialSkill);
+      handleEvaluate(initialSkill);
+    }
+  }, [initialSkill]);
 
   const sampleSkills = [
     'Machine Learning & LLMs',
@@ -57,11 +64,34 @@ export default function AiMatcher({ onRequestConnect }) {
         })
       });
       const data = await res.json();
-      if (data.success) {
+      if (data.success && Array.isArray(data.matches)) {
         setMatches(data.matches);
+      } else {
+        setMatches([]);
       }
     } catch (err) {
       console.error('Match evaluation error:', err);
+      // Fallback: fetch directly from /api/users if /api/match/evaluate fails
+      try {
+        const uRes = await fetch('/api/users');
+        const uData = await uRes.json();
+        if (uData.success && Array.isArray(uData.mentors)) {
+          const fallbackMatches = uData.mentors
+            .filter(m => m.id !== user?.id)
+            .map((m, idx) => ({
+              mentor: m,
+              matchScore: Math.max(70, 95 - idx * 3),
+              matchReasons: [
+                `Expertise in ${m.skillsOffered?.[0]?.name || 'relevant domain'}`,
+                `Compatible availability: ${m.availability}`,
+                `High community rating: ${m.rating}/5.0`
+              ]
+            }));
+          setMatches(fallbackMatches);
+        }
+      } catch (fallbackErr) {
+        console.error('Fallback error:', fallbackErr);
+      }
     } finally {
       setIsEvaluating(false);
     }
