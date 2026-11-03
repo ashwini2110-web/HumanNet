@@ -21,14 +21,15 @@ export default function Sidebar({ currentTab, setCurrentTab }) {
   const { user, logout } = useAuth();
 
   const navigationItems = [
+    { id: 'dsa_showcase', label: 'DSA Showcase', icon: Layers, badge: 'Viva Ready', highlight: true },
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, badge: null },
-    { id: 'matcher', label: 'AI Matching Engine', icon: Sparkles, badge: 'Core AI', highlight: true },
-    { id: 'marketplace', label: 'Skill Marketplace', icon: Compass, badge: 'Hot' },
+    { id: 'matcher', label: 'Mentor Matching', icon: Sparkles, badge: 'Priority Queue' },
+    { id: 'marketplace', label: 'Skill Catalog', icon: Compass, badge: 'Array' },
     { id: 'requests', label: 'Learning Requests', icon: SendHorizontal, badge: 'Queue' },
-    { id: 'connections', label: 'Human Connections', icon: Users2, badge: null },
-    { id: 'dsa', label: 'Data Architecture', icon: Layers, badge: 'DSA live' },
-    { id: 'insights', label: 'AI Intelligence', icon: BrainCircuit, badge: 'New' },
-    { id: 'profile', label: 'My Capability Profile', icon: UserCircle, badge: null },
+    { id: 'connections', label: 'Human Connections', icon: Users2, badge: 'Linked List' },
+    { id: 'dsa', label: 'System Architecture', icon: Cpu, badge: 'Stack/Tree' },
+    { id: 'insights', label: 'Skill Insights', icon: BrainCircuit, badge: null },
+    { id: 'profile', label: 'My Skill Profile', icon: UserCircle, badge: null },
   ];
 
   return (
@@ -111,9 +112,9 @@ export default function Sidebar({ currentTab, setCurrentTab }) {
         <div className="px-2 py-1.5 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center justify-between text-[11px]">
           <div className="flex items-center gap-2 text-slate-400">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <span>AI Neural Index</span>
+            <span>DSA Engine</span>
           </div>
-          <span className="font-mono text-emerald-400 font-semibold">99.8% Online</span>
+          <span className="font-mono text-emerald-400 font-semibold">100% Active</span>
         </div>
 
         <button

@@ -10,12 +10,13 @@ import LearningRequestsView from './components/LearningRequestsView';
 import ConnectionsView from './components/ConnectionsView';
 import AiInsightsView from './components/AiInsightsView';
 import DataStructuresView from './components/DataStructuresView';
+import DsaShowcaseView from './components/DsaShowcaseView';
 import ProfileView from './components/ProfileView';
 import AuthModal from './components/AuthModal';
 
 function AppContent() {
-  // Navigation tabs: 'landing' | 'dashboard' | 'matcher' | 'marketplace' | 'requests' | 'connections' | 'dsa' | 'insights' | 'profile'
-  const [currentTab, setCurrentTab] = useState('dashboard');
+  // Navigation tabs: 'landing' | 'dashboard' | 'dsa_showcase' | 'matcher' | 'marketplace' | 'requests' | 'connections' | 'dsa' | 'insights' | 'profile'
+  const [currentTab, setCurrentTab] = useState('dsa_showcase');
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const [selectedMatcherSkill, setSelectedMatcherSkill] = useState(null);
@@ -86,6 +87,7 @@ function AppContent() {
             />
 
             <main className="flex-1 overflow-y-auto">
+              {currentTab === 'dsa_showcase' && <DsaShowcaseView />}
               {currentTab === 'dashboard' && <DashboardView onNavigate={setCurrentTab} />}
               {currentTab === 'matcher' && (
                 <AiMatcher 

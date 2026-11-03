@@ -37,25 +37,25 @@ export default function DashboardView({ onNavigate }) {
         <div className="relative z-10 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-sky-500/10 text-sky-400 border border-sky-500/20 text-xs font-mono font-medium mb-3">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Operational Capability Hub</span>
+            <span>HumanNet: A Skill Sharing Platform Based on Data Structures</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
             Welcome back, {user?.name?.split(' ')[0] || 'Member'}
           </h1>
           <p className="text-sm text-[#94A3B8] mt-2 leading-relaxed">
-            Your human matching vectors are synchronized. You have 3 active mentorship threads and 12 potential high-affinity learning matches available today.
+            All data structures (Linked List, Stack, Queue, Priority Queue, Hash Map, Tree, Graph, BFS, DFS) are active and synchronized with the runtime database.
           </p>
 
           <div className="flex flex-wrap items-center gap-3 mt-6">
             <button
-              onClick={() => onNavigate('matcher')}
+              onClick={() => onNavigate('dsa_showcase')}
               className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#38BDF8] to-[#0284C7] text-slate-950 font-bold text-xs shadow-lg shadow-sky-500/20 flex items-center gap-2 hover:scale-105 transition-all"
             >
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Launch AI Matcher</span>
+              <span>Open DSA Showcase (Viva Ready)</span>
             </button>
             <button
-              onClick={() => onNavigate('marketplace')}
+              onClick={() => onNavigate('matcher')}
               className="px-5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-white font-semibold text-xs border border-slate-700 transition-all flex items-center gap-2"
             >
               <Compass className="w-3.5 h-3.5 text-purple-400" />
