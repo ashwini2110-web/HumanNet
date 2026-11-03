@@ -2,13 +2,25 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
+// Cache version — bump this whenever the default user profile changes to force a reset
+const CACHE_VERSION = '3';
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
+    // Version-gated cache: if the stored version doesn't match, discard stale data
+    const storedVersion = localStorage.getItem('humannet_cache_version');
+    if (storedVersion !== CACHE_VERSION) {
+      localStorage.removeItem('humannet_user');
+      localStorage.removeItem('humannet_token');
+      localStorage.setItem('humannet_cache_version', CACHE_VERSION);
+    }
+
     const saved = localStorage.getItem('humannet_user');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (parsed.name === 'Ashwini Sharma') {
+        // Hard enforcement: always correct legacy name
+        if (parsed.id === 'usr_ashwini' && parsed.name !== 'Ashwini Muthamshetty') {
           parsed.name = 'Ashwini Muthamshetty';
         }
         return parsed;
