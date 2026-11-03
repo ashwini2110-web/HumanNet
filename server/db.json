@@ -709,20 +709,6 @@
   ],
   "requests": [
     {
-      "id": "req_1793708134807",
-      "userId": "usr_ashwini",
-      "userName": "Ashwini Muthamshetty",
-      "userPhoto": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
-      "skillRequired": "React",
-      "category": "Technology",
-      "levelRequired": "Intermediate",
-      "mode": "Online",
-      "schedulePreference": "Weekends (Flexible)",
-      "description": "",
-      "status": "active",
-      "createdAt": "2026-11-03T12:15:34.807Z"
-    },
-    {
       "id": "req_1",
       "userId": "usr_rahul",
       "userName": "Rahul Mehta",
